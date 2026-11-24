@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retro CD Player</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- 1. ESTANTERÍA / BIBLIOTECA -->
+    <aside class="shelf">
+      <h2>Mi Colección</h2>
+      <button id="addCdBtn" class="add-btn">+ Agregar CD</button>
+      <div class="cd-rack" id="cdRack">
+        <!-- Los estuches se generan dinámicamente desde JavaScript -->
+      </div>
+    </aside>
+
+    <!-- 2. REPRODUCTOR PRINCIPAL -->
+    <main class="player-deck">
+      <div class="drop-zone" id="dropZone">
+        <div class="spinner-plate">
+          <div class="loaded-cd" id="loadedCD">
+            <div class="cd-center-hole"></div>
+          </div>
+        </div>
+        <!-- Brazo Lector Mecánico -->
+        <div class="tonearm" id="toneArm"></div>
+      </div>
+
+      <!-- Pantalla Retro LED -->
+      <div class="display-panel">
+        <div class="screen">
+          <p id="trackTitle">SIN DISCO</p>
+          <p id="artistName">Arrastra o selecciona un CD</p>
+          <div class="time-display">
+            <span id="currentTime">00:00</span> / <span id="duration">00:00</span>
+          </div>
+          <!-- Barra de Progreso del CD -->
+          <input type="range" id="progressBar" value="0" min="0" max="100" step="0.1">
+        </div>
+      </div>
+
+      <!-- Controles -->
+      <div class="controls">
+        <button id="prevBtn">⏮</button>
+        <button id="playBtn">▶</button>
+        <button id="nextBtn">⏭</button>
+        
+        <!-- Control de Volumen Retro -->
+        <div class="volume-container">
+          <span class="volume-icon">🔊</span>
+          <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
+        </div>
+      </div>
+
+      <!-- 3. LISTA DE CANCIONES -->
+      <div class="tracklist-container">
+        <h3>Canciones del Álbum</h3>
+        <ol id="tracklist">
+          <li class="empty-msg">No hay canciones disponibles</li>
+        </ol>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- MODAL PARA CARGAR CD FÍSICO Y AUDIOS LOCALES -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+      <h3>Agregar CD Físico</h3>
+      <form id="cdForm">
+        <label>Título del Álbum:</label>
+        <input type="text" id="inputTitle" placeholder="Ej. Discovery" required>
+
+        <label>Artista / Banda:</label>
+        <input type="text" id="inputArtist" placeholder="Ej. Daft Punk" required>
+
+        <label>Carátula / Portada (Imagen):</label>
+        <input type="file" id="inputCover" accept="image/*" required>
+
+        <label>Archivos de Audio (.mp3, .wav, .flac):</label>
+        <input type="file" id="inputAudioFiles" accept="audio/*" multiple required>
+
+        <div class="modal-buttons">
+          <button type="button" id="closeModalBtn">Cancelar</button>
+          <button type="submit" id="saveCdBtn">Guardar en Biblioteca</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

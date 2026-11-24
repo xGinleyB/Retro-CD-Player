@@ -1,0 +1,369 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+body {
+  background-color: #1a1a1a;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.app-container {
+  display: flex;
+  gap: 30px;
+  background: #2b2b2b;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+/* ESTANTERÍA */
+.shelf {
+  width: 200px;
+  border-right: 2px solid #444;
+  padding-right: 20px;
+}
+
+.shelf h2 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #aaa;
+}
+
+.add-btn {
+  width: 100%;
+  padding: 8px;
+  background: #00ffcc;
+  color: #111;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.add-btn:hover {
+  background: #00cca3;
+}
+
+.cd-rack {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.cd-case {
+  background: #3a3a3a;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: grab;
+  text-align: center;
+  border: 1px solid #555;
+  user-select: none;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.cd-case:hover {
+  transform: translateY(-3px);
+  background: #4a4a4a;
+}
+
+.disc-preview {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 8px;
+  border: 2px solid #222;
+  background-size: cover !important;
+  background-position: center !important;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+}
+
+.album-title {
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+/* REPRODUCTOR */
+.player-deck {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.drop-zone {
+  width: 220px;
+  height: 220px;
+  background: #111;
+  border-radius: 50%;
+  border: 4px dashed #555;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.drop-zone.drag-over {
+  border-color: #00ffcc;
+  background: #182825;
+}
+
+.loaded-cd {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-size: cover !important;
+  background-position: center !important;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 0 15px rgba(0,0,0,0.7);
+}
+
+.cd-center-hole {
+  width: 40px;
+  height: 40px;
+  background: #111;
+  border-radius: 50%;
+  border: 3px solid #666;
+}
+
+/* Animación de Giro */
+.spinning {
+  animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+/* BRAZO LECTOR (TONEARM) */
+.tonearm {
+  position: absolute;
+  top: -10px;
+  right: 15px;
+  width: 10px;
+  height: 110px;
+  background: linear-gradient(to bottom, #888, #444);
+  border-radius: 4px;
+  transform-origin: 5px 10px;
+  transform: rotate(-35deg);
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 50;
+  pointer-events: none;
+  box-shadow: -2px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.tonearm::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 20px;
+  height: 20px;
+  background: #222;
+  border: 2px solid #666;
+  border-radius: 50%;
+}
+
+.tonearm::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -3px;
+  width: 16px;
+  height: 22px;
+  background: #00ffcc;
+  border-radius: 2px;
+}
+
+.drop-zone .tonearm.active {
+  transform: rotate(15deg);
+}
+
+/* PANTALLA RETRO */
+.display-panel {
+  width: 100%;
+  background: #0d1b1e;
+  border: 2px solid #113f36;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 15px;
+  color: #00ffcc;
+  box-shadow: inset 0 0 8px rgba(0, 255, 204, 0.2);
+}
+
+.screen #trackTitle {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.screen #artistName {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  margin-bottom: 8px;
+}
+
+.time-display {
+  font-size: 0.85rem;
+  text-align: right;
+}
+
+/* BARRA DE PROGRESO */
+#progressBar {
+  width: 100%;
+  margin-top: 10px;
+  accent-color: #00ffcc;
+  cursor: pointer;
+  height: 5px;
+  background: #113f36;
+  border-radius: 3px;
+}
+
+/* CONTROLES Y VOLUMEN */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.controls button {
+  background: #444;
+  color: #fff;
+  border: none;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #222;
+}
+
+.controls button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #222;
+}
+
+.volume-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #202020;
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: 1px solid #444;
+}
+
+.volume-icon {
+  font-size: 0.9rem;
+}
+
+#volumeSlider {
+  width: 65px;
+  accent-color: #00ffcc;
+  cursor: pointer;
+}
+
+/* TRACKLIST */
+.tracklist-container {
+  width: 100%;
+  background: #202020;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.tracklist-container h3 {
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+  color: #888;
+}
+
+#tracklist {
+  padding-left: 33px;
+  font-size: 0.85rem;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+#tracklist li {
+  margin-bottom: 5px;
+  color: #ddd;
+}
+
+#tracklist .active-track {
+  color: #00ffcc;
+  font-weight: bold;
+}
+
+/* MODAL */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background: #2b2b2b;
+  padding: 25px;
+  border-radius: 8px;
+  width: 340px;
+  border: 1px solid #444;
+}
+
+.modal-content h3 {
+  margin-bottom: 15px;
+  color: #00ffcc;
+}
+
+.modal-content label {
+  font-size: 0.75rem;
+  color: #aaa;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 3px;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 8px;
+  background: #1a1a1a;
+  border: 1px solid #444;
+  color: #fff;
+  border-radius: 4px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-buttons button {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#closeModalBtn { background: #555; color: #fff; }
+#saveCdBtn { background: #00ffcc; color: #111; font-weight: bold; }
